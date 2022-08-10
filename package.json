@@ -1,0 +1,22 @@
+{
+  "name": "lms_backend",
+  "version": "1.0.0",
+  "description": "backend for the lms project ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon  --experimental-modules --es-module-specifier-resolution=node index.js"
+  },
+  "author": "rakesh pilly",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.2",
+    "nodemon": "^2.0.19"
+  },
+  "devDependencies": {
+    "mongoose-dummy": "^1.0.8"
+  }
+}
