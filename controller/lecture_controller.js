@@ -17,6 +17,7 @@ export const createLecture = async (req, res, next) => {
 
 export const getAllLecture = async (req, res, next) => {
   let lectures;
+    
 
   try {
     lectures = await LectureModel.find();
@@ -110,3 +111,5 @@ export const distincLecture = async (req, res, next) => {
 
   return res.status(400).json({ message: "error in the distinc finding" });
 };
+
+

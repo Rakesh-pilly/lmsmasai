@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json())
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT  || 5000;
 
 app.get("/", (req, res, next) => {
   res.status(200).json("backend is live for lms! Happy coding");
@@ -24,7 +24,7 @@ mongoose
     "mongodb+srv://admin:lPZRtSAvDkHZZjUL@cluster0.xmqkgks.mongodb.net/lms?retryWrites=true&w=majority"
   )
   .then(() => {
-    app.listen(5000, () => {
+    app.listen(PORT, () => {
       console.log(`listing to the port ${PORT}`);
     });
   })
