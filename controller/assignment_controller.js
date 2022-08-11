@@ -18,8 +18,74 @@ export const createAssignment = async (req, res, next) => {
 export const getAllAssignment = async (req, res, next) => {
   let assignment;
 
+
+  let { optional, scheduled, instructor, type, category, title } = req.query;
+  let flag = false;
+  let q = {};
+  q["$and"] = [];
+  if (title && title.trim() !== "") {
+    let reg = new RegExp(`^${title}`);
+    q["$and"].push({ title: { $regex: reg } });
+    flag = true;
+  }
+
+  if (category && category.trim() !== "") {
+    q["$and"].push({ category: category });
+
+    flag = true;
+  }
+
+
+  if (type && type.trim() !== "") {
+    q["$and"].push({ type: type });
+
+    flag = true;
+  }
+  if (scheduled && scheduled.trim() !== "") {
+    q["$and"].push({ scheduled: scheduled });
+
+    flag = true;
+  }
+
+  if (instructor && instructor.trim() !== "") {
+    q["$and"].push({ instructor: instructor });
+
+    flag = true;
+  }
+
+  if (optional && optional.trim() !== "") {
+
+    let bol = false
+
+    if(optional.trim() === "Yes" || (optional.trim() === "yes") ){
+        bol = true;
+    }
+    q["$and"].push({ optional: bol });
+
+    flag = true;
+  }
+
+
+  if (req.body.status && req.body.status.trim() !== "") {
+
+    let bol = false
+
+    if(req.body.status.trim() === "Yes" || (req.body.status.trim() === "yes") ){
+        bol = true;
+    }
+    q["$and"].push({ status: bol });
+
+    flag = true;
+  }
+
+  if (!flag) {
+    q = {};
+  }
+  
+
+
   try {
-    assignment = await assignmentModel.find();
+    assignment = await assignmentModel.find(q);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -115,10 +181,8 @@ export const deleteAassignment = async (req, res, next) => {
             type: { $addToSet: "$type" },
             category: { $addToSet: "$category" },
   
-            instructor: { $addToSet: "$instructor" },
+            instructor: { $addToSet: "$instructor" }
   
-            optional: { $addToSet: "$optional" },
-            status: {$addToSet: "$status"}
           },
         },
       ]);
